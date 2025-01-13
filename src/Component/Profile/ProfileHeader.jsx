@@ -1,5 +1,5 @@
 import { Avatar, AvatarGroup, Box, Button, Flex, Text } from '@chakra-ui/react'
-import { base } from 'framer-motion/client'
+
 import React from 'react'
 
 const ProfileHeader = () => {

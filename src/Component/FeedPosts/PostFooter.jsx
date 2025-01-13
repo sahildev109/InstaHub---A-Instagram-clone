@@ -2,7 +2,7 @@ import { Box, Button, Container, Flex, Input, InputGroup, InputRightAddon, Input
 import React, { useState } from 'react'
 import { CommentLogo, NotificationsLogo, UnlikeLogo } from '../../assets/constants'
 
-const PostFooter = ({username}) => {
+const PostFooter = ({username, isProfilePage}) => {
 const [isliked,setisliked]=useState(false)
 const [likes,setlikes]=useState(10)
 
@@ -17,7 +17,7 @@ const handleLike=()=>{
 
   return (
    <>
-   <Container p={0} w={'full'} mb={5}>
+   <Box w={'full'} mb={5} mt={'auto'} >
     <Flex p={0}
    gap={4}
    py={2}
@@ -48,7 +48,8 @@ const handleLike=()=>{
        <Text>{likes} {likes===1?'like':'likes'}</Text> 
     </Box>):null}
     
-   <Box py={2}>
+   {isProfilePage? null:(<>
+    <Box py={2}>
 <Text fontWeight={'bold'}
 fontSize={'14px'} >
 {username} {'  '}
@@ -65,6 +66,7 @@ fontSize={'14px'}
 color={'rgb(115, 115, 115)'}>
   View all 1,000 comments
 </Text>
+   </>)}
 <Flex w={'full'} alignItems={'center'} justifyContent={'space-between'} fontSize={"14px"} gap={2}>
 <InputGroup>
 <Input variant={'flushed'} placeholder='Add comment....' />
@@ -80,7 +82,7 @@ bg={'transparent'}>
 </InputGroup>
 </Flex>
 
-   </Container>
+   </Box>
    </>
   )
 }
