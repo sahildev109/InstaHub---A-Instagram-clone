@@ -5,13 +5,13 @@ import SuggestedUsers from "../../Component/SuggestedUsers/SuggestedUsers"
 const HomePage = () => {
   return (
    <>
- <Container border={'2px solid green'} maxW={'container.lg'} >
+ <Container  maxW={'container.lg'} >
 <Flex gap={'10%'}>
 
-<Box flex={2} border={'1px solid blue'} p={'2%'}  >
+<Box flex={2}  p={'2%'}  >
  <FeedPosts/>
 </Box>
-<Box flex={1}   border={'1px solid red'} display={{base:'none',md:'block'
+<Box flex={1} display={{base:'none',md:'block'
 }}  >
 <SuggestedUsers/>
 </Box>

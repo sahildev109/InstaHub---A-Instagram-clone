@@ -7,7 +7,7 @@ import { Box, Container, Flex } from '@chakra-ui/react'
 const ProfilePage = () => {
   return (
    <>
-   <Container border={'1px solid red'}
+   <Container 
    maxW={'container.lg'}
    py={{base:0,md:5}}
    px={{base:0,md:10}}>
