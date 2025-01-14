@@ -4,11 +4,13 @@ import { Link as RouterLink } from "react-router-dom"
 import { AiFillHome } from "react-icons/ai";
 import { Tooltip } from '@chakra-ui/react'
 import { TbLogout2 } from "react-icons/tb";
+import useLogout from "../../hooks/useLogout";
 
 
 
 
 const SideBar = () => {
+  const {handleLogout,isLoggingOut}=useLogout()
   const items=[
     {
       icon:<AiFillHome size={24}/>,
@@ -116,7 +118,9 @@ const SideBar = () => {
             </Link>
             
 <Flex direction={'column'} gap={{base:5,lg:4}}>
+
 {items.map(handleItems)}
+
 </Flex>
 
 <Tooltip
@@ -127,9 +131,8 @@ const SideBar = () => {
       openDelay={600}
       display={{base:'block',lg:'none'}}
       >
-        <Link
-        as={RouterLink}
-        to={'/auth'}
+        <Flex
+       onClick={handleLogout}
         _hover={{
           bg:'whiteAlpha.300'
         }}
@@ -149,7 +152,7 @@ const SideBar = () => {
 
     <Text >Log out</Text>
   </Box>
-        </Link>
+        </Flex>
       </Tooltip>      
         </Flex>
 
