@@ -5,11 +5,13 @@ import { AiFillHome } from "react-icons/ai";
 import { Tooltip } from '@chakra-ui/react'
 import { TbLogout2 } from "react-icons/tb";
 import useLogout from "../../hooks/useLogout";
+import useAuthStore from "../../store/useAuthStore";
 
 
 
 
 const SideBar = () => {
+  const user=useAuthStore(state=>state.user)
   const {handleLogout,isLoggingOut}=useLogout()
   const items=[
     {
@@ -32,10 +34,10 @@ const SideBar = () => {
       text:'Create',
       link:'/'
           },
-    ,{
+    {
       icon:<Avatar size={'xs'} src="./pp1.png"/>,
       text:'Profile',
-      link:'/donquixote.doflamingo'
+      link:`/${user.username}`
           }
   ]
 
@@ -132,6 +134,7 @@ const SideBar = () => {
       display={{base:'block',lg:'none'}}
       >
         <Flex
+        cursor={'pointer'}
        onClick={handleLogout}
         _hover={{
           bg:'whiteAlpha.300'

@@ -1,6 +1,7 @@
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
-import { Button, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
+import { Alert, AlertIcon, Button, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
 import React, { useState } from 'react'
+import useLogInWEmail from '../../hooks/useLogInWEmail'
 
 const Login = () => {
 const [showPass,setshowPass]=useState(false)
@@ -10,6 +11,7 @@ const [showPass,setshowPass]=useState(false)
         password:'',
       }
     )
+    const { loading, error, login }=useLogInWEmail()
 
   return (
 <>
@@ -28,8 +30,13 @@ const [showPass,setshowPass]=useState(false)
                    </InputRightElement>
        
        </InputGroup>
-
-         <Button w={'full'} colorScheme="blue" size={'sm'} >
+     {error && (
+            <Alert status='error' fontSize={13} p={2} borderRadius={4}>
+              <AlertIcon fontSize={12} />
+              {error.message}
+            </Alert>
+          )}
+         <Button w={'full'} colorScheme="blue" size={'sm'} onClick={()=>login(inp)} isLoading={loading}>
                   Log in
                 </Button>
 </>

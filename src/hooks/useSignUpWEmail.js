@@ -1,10 +1,14 @@
-import { doc, setDoc } from 'firebase/firestore';
+import { collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import {auth} from '../firebase/firebase'
 import {firestore} from '../firebase/firebase'
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import useShowToast from './useShowToast';
+import useAuthStore from '../store/useAuthStore';
 
 const useSignUpWEmail = () => {
+
+	const signupUser=useAuthStore(state=>state.login)
+
 
     const [
         createUserWithEmailAndPassword,
@@ -20,6 +24,17 @@ const toast=useShowToast()
 			toast('Error','Please Fill all the Required fields!', 'error')
 			return;
 		}
+
+		const usersRef = collection(firestore, "users");
+
+		const q = query(usersRef, where("username", "==", inp.username));
+		const querySnapshot = await getDocs(q);
+
+		if (!querySnapshot.empty) {
+			toast("Error", "Username already exists", "error");
+			return;
+		}
+
         try {
             const newUser= await createUserWithEmailAndPassword(inp.email,inp.password)
             if (!newUser && error) {
@@ -41,7 +56,8 @@ const toast=useShowToast()
 					createdAt: Date.now()
 				};
                 await setDoc(doc(firestore, "users", newUser.user.uid), userDoc);
-				localStorage.setItem("user-info", JSON.stringify(userDoc));}
+				localStorage.setItem("user-info", JSON.stringify(userDoc));
+				signupUser(userDoc)}
 
         } catch (error) {
             
