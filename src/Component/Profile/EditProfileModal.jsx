@@ -17,8 +17,9 @@ import {
   } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import useAuthStore from "../../store/useAuthStore";
-  
-  const EditProfile = ({ isOpen, onClose }) => {
+import usePreviewImage from "../../hooks/usePreviewImage";
+const EditProfile = ({ isOpen, onClose }) => {
+    const { selectedFile, handleImageChange, setSelectedFile }=usePreviewImage();
     const fileInputRef = useRef(null);
     const [inp,setinp]=useState({
       fullName:'',
@@ -50,14 +51,14 @@ import useAuthStore from "../../store/useAuthStore";
   								<FormControl>
   									<Stack direction={["column", "row"]} spacing={6}>
   										<Center>
-  											<Avatar size='xl' src={""} border={"2px solid white "} />
+  											<Avatar size='xl' src={selectedFile||user.profilePicURL} border={"2px solid white "} />
   										</Center>
   										<Center w='full'>
   											<Button w='full' onClick={()=>  fileInputRef.current.click()}>Edit Profile Picture</Button>
   										</Center>
                       <Input type="file" 
                       ref={fileInputRef}
-                      display="none"/>
+                      display="none" onChange={handleImageChange}/>
   									</Stack>
   								</FormControl>
   
