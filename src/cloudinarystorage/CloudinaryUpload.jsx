@@ -27,7 +27,7 @@ const CloudinaryUpload = () => {
     try {
       // Send the file to Cloudinary
       const response = await axios.post(
-        `https://api.cloudinary.com/v1_1/dzsj989i0/image/upload`,
+        `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`,
         formData
       );
 
