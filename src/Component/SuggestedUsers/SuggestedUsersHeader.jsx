@@ -14,10 +14,7 @@ const SuggestedUsersHeader = () => {
   alignItems={'center'}
   w={'full'}
   py={2}>
-    <Link 
-    as={RouterLink}
-    to={'/donquixote.doflamingo'}
-    style={{textDecoration:'none'}}>
+   
 <Flex alignItems={'center'}
 gap={2}
 cursor={'pointer'}
@@ -30,7 +27,7 @@ cursor={'pointer'}
 <Text>{user.username}</Text>
 </Link>
 </Flex>
-</Link>
+
 
 <Button
 onClick={handleLogout}

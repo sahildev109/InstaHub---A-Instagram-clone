@@ -19,12 +19,11 @@ const useGetUserProfileByUsername = (username) => {
 
 				if (querySnapshot.empty) return setUserProfile(null);
 
-				let userDoc;
-				querySnapshot.forEach((doc) => {
-					userDoc = doc.data();
-				});
+				
+				 const doc = querySnapshot.docs[0];
+          setUserProfile(doc.data());
 
-				setUserProfile(userDoc);
+				
 				
 			} catch (error) {
 			toast("Error", error.message, "error");

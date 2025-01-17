@@ -6,77 +6,17 @@ import { Tooltip } from '@chakra-ui/react'
 import { TbLogout2 } from "react-icons/tb";
 import useLogout from "../../hooks/useLogout";
 import useAuthStore from "../../store/useAuthStore";
+import SideBarItems from "./SideBarItems";
 
 
 
 
 const SideBar = () => {
-  const user=useAuthStore(state=>state.user)
+ 
   const {handleLogout,isLoggingOut}=useLogout()
-  const items=[
-    {
-      icon:<AiFillHome size={24}/>,
-      text:'Home',
-      link:'/'
-    },
-    {
-      icon:<SearchLogo size={24}/>,
-      text:'Search',
-      link:'/'
-          },
-    {
-      icon:<NotificationsLogo size={24}/>,
-      text:'Notification',
-      link:'/'
-          },
-    {
-      icon:<CreatePostLogo size={24}/>,
-      text:'Create',
-      link:'/'
-          },
-    {
-      icon:<Avatar size={'xs'} src="./pp1.png"/>,
-      text:'Profile',
-      link:`/${user.username}`
-          }
-  ]
+  
 
-  const handleItems=(item,index)=>{
-   return (
-      <Tooltip
-      key={index}
-      hasArrow
-      label={item.text}
-      placement="right"
-      ml={1}
-      openDelay={600}
-      display={{base:'block',lg:'none'}}
-      >
-        <Link
-        as={RouterLink}
-        to={item.link}
-        _hover={{
-          bg:'whiteAlpha.300'
-        }}
-        transition={'0.2s ease-in-out'}
-        borderRadius={6}
-        w={{base:10,lg:'full'}}
-        p={2}
-       py={{base:2,lg:3}}
-        display={'flex'}
-        gap={4}
-        alignItems={'center'}
-        justifyContent={'flex-start'}
-        >
-        {item.icon}
-        <Box display={{base:'none',lg:'block'}}>
-
-    <Text >{item.text}</Text>
-  </Box>
-        </Link>
-      </Tooltip>
-    )
-  }
+  
   return (
    <>
    <Box h={'100vh'}
@@ -119,11 +59,7 @@ const SideBar = () => {
 <InstagramMobileLogo/>
             </Link>
             
-<Flex direction={'column'} gap={{base:5,lg:4}}>
-
-{items.map(handleItems)}
-
-</Flex>
+<SideBarItems/>
 
 <Tooltip
       hasArrow

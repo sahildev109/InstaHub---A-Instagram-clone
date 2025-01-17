@@ -18,19 +18,30 @@ import {
 import { useRef, useState } from "react";
 import useAuthStore from "../../store/useAuthStore";
 import usePreviewImage from "../../hooks/usePreviewImage";
+import useEditProfile from "../../hooks/useEditProfile";
+import useShowToast from "../../hooks/useShowToast";
 const EditProfile = ({ isOpen, onClose }) => {
     const { selectedFile, handleImageChange, setSelectedFile }=usePreviewImage();
     const fileInputRef = useRef(null);
+	const toast = useShowToast();
     const [inp,setinp]=useState({
       fullName:'',
       username:'',  
       bio:''
     })
+const {editProfile, isUpdating}=useEditProfile();
+
     const user=useAuthStore((state)=>state.user)
-    const handleEditProfile=()=>{
-      console.log(inp)
-      //API call to update user profile
-      onClose()
+    const handleEditProfile= async()=>{
+     try {
+		console.log(inp);
+		await editProfile(inp,selectedFile);
+		setSelectedFile(null);
+		onClose()
+	 } catch (error) {
+		toast("Error", error.message, "error");
+		
+	 }
     }
   	return (
 
@@ -96,6 +107,7 @@ const EditProfile = ({ isOpen, onClose }) => {
   										w='full'
   										_hover={{ bg: "blue.500" }}
                       onClick={handleEditProfile}
+					  isLoading={isUpdating}
   									>
   										Submit
   									</Button>
