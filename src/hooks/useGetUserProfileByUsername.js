@@ -19,9 +19,9 @@ const useGetUserProfileByUsername = (username) => {
 
 				if (querySnapshot.empty) return setUserProfile(null);
 
-				
-				 const doc = querySnapshot.docs[0];
-          setUserProfile(doc.data());
+				querySnapshot.forEach((doc) => {	
+					setUserProfile(doc.data());
+				})
 
 				
 				

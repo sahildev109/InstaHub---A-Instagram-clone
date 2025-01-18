@@ -19,7 +19,7 @@ const Profile = () => {
           >
             <Link
             as={RouterLink}
-            to='/'
+            to={`/${user.username}`}
             _hover={{
               bg:'whiteAlpha.300'
             }}

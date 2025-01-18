@@ -16,8 +16,7 @@ const useFollowUser = (userId) => {
 	const handleFollowUser = async () => {
 		setIsUpdating(true);
 		try {
-            console.log(userProfile)
-            console.log(authUser)
+          
 			const currentUserRef = doc(firestore, "users", authUser.uid);
 			const userToFollowOrUnfollorRef = doc(firestore, "users", userId);
 			await updateDoc(currentUserRef, {

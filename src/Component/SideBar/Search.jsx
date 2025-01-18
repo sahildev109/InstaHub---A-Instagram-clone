@@ -2,14 +2,14 @@ import { Box, Text, Tooltip,Link, Modal, ModalOverlay, ModalContent, ModalHeader
 import { Link as RouterLink } from "react-router-dom"
 import SuggestedUser from '../SuggestedUsers/SuggestedUser'
 import { SearchLogo } from '../../assets/constants'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import useSearchUser from '../../hooks/useSearchUser'
 
 const Search = () => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const [uname,setuname]=useState('')
+   
         
 
     const searchRef = useRef(null);
@@ -17,9 +17,14 @@ const Search = () => {
 
 	const handleSearchUser = (e) => {
 		e.preventDefault();
-        if(uname){ getUserProfile(uname);}
-       if(user) console.log(user)
+       getUserProfile(searchRef.current.value);
+        
 	};
+    useEffect(() => {
+        if (user) {
+            console.log(user);
+        }
+    }, [user]);
 
   return (
    <>
@@ -70,7 +75,8 @@ onClick={onOpen}
                 <FormControl>
                     <FormLabel>Username</FormLabel>
                     <Input placeholder='username' 
-                    onChange={(e)=>setuname(e.target.value)} />
+                    ref={searchRef}
+                  />
                 </FormControl>
 
                 <Flex w={"full"} justifyContent={"flex-end"}>
@@ -79,7 +85,7 @@ onClick={onOpen}
                     </Button>
                 </Flex>
             </form>
-            
+           {user && <SuggestedUser user={user} setUser={setUser}/>}
             
         </ModalBody>
     </ModalContent>
