@@ -1,10 +1,50 @@
-import { Avatar, Box, Divider, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Text } from '@chakra-ui/react'
-import React from 'react'
+import { Avatar, Box, Button, Divider, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Text } from '@chakra-ui/react'
+import React, { useState } from 'react'
 import { MdDelete } from 'react-icons/md'
 import Comment from '../Comment/Comment'
 import PostFooter from '../FeedPosts/PostFooter'
+import useUserProfileStore from '../../store/useUserProfileStore'
+import useAuthStore from '../../store/useAuthStore'
+import usePostStore from '../../store/usePostStore'
+import useShowToast from '../../hooks/useShowToast'
+import { arrayRemove, deleteDoc, doc, updateDoc } from 'firebase/firestore'
+import { firestore } from '../../firebase/firebase'
 
-const PostModal = ({isOpen,onClose,postimg}) => {
+const PostModal = ({isOpen,onClose,post}) => {
+  const {userProfile}=useUserProfileStore()
+const authUser=useAuthStore(state=>state.user)
+const toast = useShowToast();
+const [isDeleting, setIsDeleting] = useState(false);
+	const deletePost = usePostStore((state) => state.deletePost);
+	const decrementPostsCount = useUserProfileStore((state) => state.deletePost);
+
+const handleDeletePost = async () => {
+
+
+  if (!window.confirm("Are you sure you want to delete this post?")) return;
+  if (isDeleting) return;
+
+  try {
+   
+    const userRef = doc(firestore, "users", authUser.uid);
+    await deleteDoc(doc(firestore, "posts", post.id));
+
+    await updateDoc(userRef, {
+      posts: arrayRemove(post.id),
+    });
+
+    deletePost(post.id);
+    decrementPostsCount(post.id);
+    toast("Success", "Post deleted successfully", "success");
+  } catch (error) {
+ toast("Error", error.message, "error");
+  } finally {
+    setIsDeleting(false);
+  }
+};
+
+
+
   return (
 <>
 <Modal isOpen={isOpen} onClose={onClose} size={{ base:'2xl',md:'5xl' }}
@@ -14,7 +54,7 @@ const PostModal = ({isOpen,onClose,postimg}) => {
          
           <ModalCloseButton pt={3}/>
           <ModalBody bg={'black'} borderRadius={'lg'} p={0}  overflow={'hidden'}>
-            <Flex w={{base:'90%',sm:'70%',md:'full'}} mx={'auto'} flexDirection={{base:'column',md:'row'}} >
+            <Flex w={{base:'90%',sm:'70%',md:'full'}} mx={'auto'} flexDirection={{base:'column',md:'row'}} maxH={'90vh'} minH={'50vh'} >
               <Box flex={1.5}
             display="flex" 
             alignItems="center" 
@@ -22,33 +62,29 @@ const PostModal = ({isOpen,onClose,postimg}) => {
                 overflow={'hidden'}
                 border={'1px solid'}
                 borderColor={'whiteAlpha.300'}>
-                  <Image alignSelf={'center'} src={postimg} alt='hello'/>
+                  <Image alignSelf={'center'} src={post.imageURL} alt='hello'/>
               </Box>
               
               <Flex flexDirection={'column'} flex={1}  pt={3}>
 <Flex alignItems={'center'} justifyContent={'space-between'} pl={6}>
   <Flex alignItems={'center'} gap={2}>
-  <Avatar src='pp1.png' boxSize={'32px'} />
-  <Text fontSize={14} fontWeight={'bold'}>donquixote.doflamingo</Text>
+  <Avatar src={userProfile.profilePicURL} boxSize={'32px'} />
+  <Text fontSize={14} fontWeight={'bold'}>{userProfile.username}</Text>
   </Flex>
-  <Box _hover={{color:'red'}} transition={'0.2s ease-in-out'} pr={10}> 
+  
+{authUser?.username === userProfile.username &&<Button bg={'transparent'} _hover={{color:'red', bg:'transparent'}} transition={'0.2s ease-in-out'} mr={10} w={'min-content'} onClick={handleDeletePost}> 
 < MdDelete size={20} cursor={'pointer'} />
-</Box>
+</Button>}
+
 </Flex>
 <Divider my={4} bg={'gray.500'} />
 <Flex w={'full'} flexDirection={'column'} gap={4} overflowY={'auto'} maxH={'350px'} pl={6}>
-<Comment profilepic={'./pp1.png'} username={'donquixote.doflamingo'} comment={'hehehehheheheh'} postedon={'1d'}/>
-<Comment profilepic={'./pp3.png'} username={'donquixote.doflamingo'} comment={'hehehehheheheh'} postedon={'1d'}/>
-<Comment profilepic={'./pp4.png'} username={'donquixote.doflamingo'} comment={'hehehehheheheh'} postedon={'1d'}/>
-<Comment profilepic={'./pp7.png'} username={'donquixote.doflamingo'} comment={'hehehehheheheh'} postedon={'1d'}/>
-<Comment profilepic={'./pp7.png'} username={'donquixote.doflamingo'} comment={'hehehehheheheh'} postedon={'1d'}/>
-<Comment profilepic={'./pp7.png'} username={'donquixote.doflamingo'} comment={'hehehehheheheh'} postedon={'1d'}/>
-<Comment profilepic={'./pp7.png'} username={'donquixote.doflamingo'} comment={'hehehehheheheh'} postedon={'1d'}/>
+{post.comments.map(comment=><Comment key={comment.id} comment={comment}/>)}
 
 </Flex>
 <Divider my={4} bg={'gray.500'}/>
 <Flex px={6} flexDirection={'column'}  flexGrow={1}>
-<PostFooter isProfilePage={true}/>
+<PostFooter isProfilePage={true} post={post}/>
 </Flex>
               </Flex>
              

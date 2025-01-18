@@ -1,16 +1,26 @@
 import { Box, Button, Container, Flex, Input, InputGroup, InputRightAddon, InputRightElement, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { CommentLogo, NotificationsLogo, UnlikeLogo } from '../../assets/constants'
+import usePostComment from '../../hooks/usePostComment'
+import useAuthStore from '../../store/useAuthStore'
 
-const PostFooter = ({username, isProfilePage}) => {
+const PostFooter = ({username, isProfilePage,post}) => {
 const [isliked,setisliked]=useState(false)
 const [likes,setlikes]=useState(10)
-
+const [comment, setComment] = useState("");
+const authUser=useAuthStore(state=>state.user)
 const handleLike=()=>{
   const likeState=!isliked
     setisliked(likeState)
     likeState?setlikes(likes+1):setlikes(likes-1)
  
+}
+
+const {isCommenting,handlePostComment}=usePostComment();
+const handleComment= async()=>{
+
+  await handlePostComment(post.id, comment);
+		setComment("");
 }
 
 
@@ -67,20 +77,22 @@ color={'rgb(115, 115, 115)'}>
   View all 1,000 comments
 </Text>
    </>)}
-<Flex w={'full'} alignItems={'center'} justifyContent={'space-between'} fontSize={"14px"} gap={2}>
+{authUser&&<Flex w={'full'} alignItems={'center'} justifyContent={'space-between'} fontSize={"14px"} gap={2}>
 <InputGroup>
-<Input variant={'flushed'} placeholder='Add comment....' />
+<Input variant={'flushed'} placeholder='Add comment....' value={comment} onChange={(e)=>setComment(e.target.value)} />
 <InputRightElement>
 <Button 
 fontWeight={'bold'}
 color={'blue.500'}
 _hover={{color:'white'}}
-bg={'transparent'}>
+bg={'transparent'}
+onClick={handleComment}
+isLoading={isCommenting}>
   Post
 </Button>
 </InputRightElement>
 </InputGroup>
-</Flex>
+</Flex>}
 
    </Box>
    </>

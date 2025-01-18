@@ -85,7 +85,7 @@ onClick={onOpen}
                     </Button>
                 </Flex>
             </form>
-           {user && <SuggestedUser user={user} setUser={setUser}/>}
+           {user && <SuggestedUser user={user} setUser={setUser} />}
             
         </ModalBody>
     </ModalContent>

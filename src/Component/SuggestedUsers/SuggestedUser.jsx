@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import useAuthStore from '../../store/useAuthStore'
 import useFollowUser from '../../hooks/useFollowUser'
 import useGetUserProfileByUsername from '../../hooks/useGetUserProfileByUsername'
+import { Link } from 'react-router-dom'
 
 const SuggestedUser = ({user,setUser}) => {
     const {isFollowing,isUpdating,handleFollowUser}=useFollowUser(user.uid)
@@ -28,9 +29,13 @@ const SuggestedUser = ({user,setUser}) => {
 <Flex alignItems={'center'} gap={2}
 cursor={'pointer'}
 >
+    <Link to={`/${user.username}`}>
 <Avatar src={user.profilePicURL} boxSize={'44px'}/>
+</Link>
 <Box>
+<Link to={`/${user.username}`}>
     <Text fontWeight={'bold'} fontSize={14}>{user.username}</Text>
+    </Link>
     <Text fontSize={12} color={'rgb(115, 115, 115)'} fontWeight={600}> {user.followers.length} Followers</Text>
 </Box>
 </Flex>

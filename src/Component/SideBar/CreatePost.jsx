@@ -147,7 +147,7 @@ function useCreatePost() {
         formData.append("file", selectedFile);
         formData.append("upload_preset",import.meta.env.VITE_CLOUDINARY_PRESET_NAME); 
         formData.append("cloud_name", import.meta.env.VITE_CLOUDINARY_CLOUD_NAME); 
-        formData.append("folder", `user_posts/${authUser.username}`);
+        formData.append("folder", `user_posts/${authUser.username}/${postDocRef.id}`);
         const response = await axios.post(
             `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`,
             formData

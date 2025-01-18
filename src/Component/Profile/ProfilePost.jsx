@@ -7,7 +7,7 @@ import Comment from '../Comment/Comment';
 import PostFooter from '../FeedPosts/PostFooter';
 import PostModal from './PostModal';
 
-const ProfilePost = ({postimg}) => {
+const ProfilePost = ({post}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <>
@@ -39,21 +39,21 @@ transition={'0.3s ease-in-out'}
   <Flex gap={8} >
 <Flex alignItems={'center'} gap={2}>
 <AiFillHeart size={20} />
-<Text fontWeight={'bold'}>10.2M</Text>
+<Text fontWeight={'bold'}>{post.likes.length}</Text>
 </Flex>
 
 <Flex alignItems={'center'} gap={2}>
 <FaComment size={20} />
-<Text fontWeight={'bold'}>4.2M</Text>
+<Text fontWeight={'bold'}>{post.comments.length}</Text>
 </Flex>
   </Flex>
 
 </Flex>
- <Image src={postimg} w={'100%'} h={'100%'} objectFit={'cover'}/>
+ <Image src={post.imageURL} w={'100%'} h={'100%'} objectFit={'cover'}/>
     </GridItem>
 
 
-  {isOpen&&<PostModal isOpen={isOpen} onClose={onClose} postimg={postimg}/>}
+  {isOpen&&<PostModal isOpen={isOpen} onClose={onClose} post={post}/>}
 
     </>
   )
