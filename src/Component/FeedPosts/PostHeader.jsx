@@ -1,10 +1,16 @@
-import { Avatar, Box, Flex, Text } from "@chakra-ui/react"
+import { Avatar, Box, Button, Flex, Text } from "@chakra-ui/react"
 
 import { useState } from "react"
+import useGetUserProfileById from "../../hooks/useGetUserProfileById"
+import { timeAgo } from "../../utils/timeAgo"
+import { Link } from "react-router-dom"
+import useFollowUser from "../../hooks/useFollowUser"
 
 
-const PostHeader = ({username,profilepic}) => {
-    const [isfollowing,setisfollowing]=useState(true)
+const PostHeader = ({post , creatorProfile}) => {
+    const {isUpdating, isFollowing, handleFollowUser}=useFollowUser(creatorProfile.uid)
+   
+   
   return (
    <Flex 
    fontWeight={'bold'} 
@@ -15,9 +21,13 @@ const PostHeader = ({username,profilepic}) => {
 gap={2}
 justifyContent={'center'} alignItems={'center'}
 cursor={'pointer'}>
-    <Avatar src={profilepic} size={'sm'}/>
-    <Text>{username}</Text>
-    <Text color={'rgb(115 115 115)'}>• 1w</Text>
+    <Link to={`/${creatorProfile.username}`}>
+    <Avatar src={creatorProfile.profilePicURL} size={'sm'}/>
+    </Link>
+    <Link to={`/${creatorProfile.username}`}>
+    <Text>{creatorProfile.username}</Text>
+    </Link>
+    <Text color={'rgb(115 115 115)'}>• {timeAgo(post.createdAt)}</Text>
     
 
 </Flex>
@@ -30,9 +40,9 @@ _hover={
    }
 }
 transition={'0.2s ease-in-out'}>
-    <Text onClick={()=>setisfollowing(!isfollowing)}>
-        {isfollowing?'Unfollow':'Follow'}
-    </Text>
+    <Button size={'sm'} onClick={handleFollowUser} isLoading={isUpdating} color={'blue.500'} bg={'transparent'} _hover={{color:'white'}}>
+        {isFollowing? 'Unfollow':'Follow'}
+    </Button>
 </Box>
 
    </Flex>

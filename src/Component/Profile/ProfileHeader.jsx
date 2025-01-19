@@ -36,17 +36,17 @@ const confirmUnfollow = () => {
   <Flex ml={10} gap={4} fontSize={12} display={{base:'flex',md:'none'}}>
 <Flex direction={'column'}
 alignItems={'center'}>
-  <Text fontWeight={'bold'}>4</Text>
+  <Text fontWeight={'bold'}>{userProfile.posts.length}</Text>
   <Text>posts</Text>
   </Flex>
   <Flex direction={'column'}
 alignItems={'center'}>
-  <Text fontWeight={'bold'}>50M</Text>
+  <Text fontWeight={'bold'}>{userProfile.followers.length}</Text>
   <Text>followers</Text>
   </Flex>
   <Flex direction={'column'}
 alignItems={'center'}>
-  <Text fontWeight={'bold'}>10</Text>
+  <Text fontWeight={'bold'}>{userProfile.following.length}</Text>
   <Text>following</Text>
   </Flex>
 

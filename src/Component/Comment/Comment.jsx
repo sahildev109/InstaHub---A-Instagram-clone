@@ -2,6 +2,7 @@ import { Avatar, Box, Flex, Skeleton, SkeletonCircle, Text } from '@chakra-ui/re
 import React from 'react'
 import useGetUserProfileById from '../../hooks/useGetUserProfileById';
 import { timeAgo } from '../../utils/timeAgo';
+import { Link } from 'react-router-dom';
 
 const Comment = ({comment} ) => {
 
@@ -12,10 +13,14 @@ const Comment = ({comment} ) => {
   return (
    <>
    <Flex gap={2} alignItems={'center'}>
+    <Link to={`/${userProfile.username}`} >
     <Avatar src={userProfile.profilePicURL} boxSize={'32px'}/>
+    </Link>
     <Flex flexDir={'column'}>
         <Flex fontSize={14} gap={2}>
+        <Link to={`/${userProfile.username}`} >
         <Text fontWeight={'bold'}>{userProfile.username}</Text>
+        </Link>
         <Text>{comment.comment}</Text>
         </Flex>
         <Text fontSize={12} color={'gray'}>{timeAgo(comment.createdAt)}</Text>

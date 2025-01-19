@@ -9,6 +9,7 @@ import usePostStore from '../../store/usePostStore'
 import useShowToast from '../../hooks/useShowToast'
 import { arrayRemove, deleteDoc, doc, updateDoc } from 'firebase/firestore'
 import { firestore } from '../../firebase/firebase'
+import Caption from '../Comment/Caption'
 
 const PostModal = ({isOpen,onClose,post}) => {
   const {userProfile}=useUserProfileStore()
@@ -79,6 +80,7 @@ const handleDeletePost = async () => {
 </Flex>
 <Divider my={4} bg={'gray.500'} />
 <Flex w={'full'} flexDirection={'column'} gap={4} overflowY={'auto'} maxH={'350px'} pl={6}>
+  {post.caption&&<Caption post={post}/>}
 {post.comments.map(comment=><Comment key={comment.id} comment={comment}/>)}
 
 </Flex>
