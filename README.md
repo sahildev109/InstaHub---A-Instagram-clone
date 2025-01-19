@@ -21,25 +21,25 @@ An Instagram clone built with **React**, **Firebase**, **Zustand**, and **Cloudi
 
 ## Screenshots
 ### Login Page
-![Login Page](./src/screenshots/login.png)
+![Login Page](./public/screenshots/login.png)
 
 ### Home Page
-![Home Page](./src/screenshots/home.png)
+![Home Page](./public/screenshots/home.png)
 
 ### Profile Page
-![Profile Page](./src/screenshots/profile.png)
+![Profile Page](./public/screenshots/profile.png)
 
 ### Edit Profile Page
-![Edit Profile Page](./src/screenshots/editprofile.png)
+![Edit Profile Page](./public/screenshots/editprofile.png)
 
 ### Create Post Page
-![Create Post Page](./src/screenshots/createpost.png)
+![Create Post Page](./public/screenshots/createpost.png)
 
 ### Search Page
-![Search Page](./src/screenshots/search.png)
+![Search Page](./public/screenshots/search.png)
 
 ### Post Page
-![Post Page](./src/screenshots/profilepost.png)
+![Post Page](./public/screenshots/profilepost.png)
 
 ---
 
