@@ -23,6 +23,12 @@ An Instagram clone built with **React**, **Firebase**, **Zustand**, and **Cloudi
 ### Login Page
 ![Login Page](./public/screenshots/login.png)
 
+### Sign Up Page
+![Sign Up Page](./public/screenshots/signup.png)
+
+### Google Sign in Page
+![Google Sign in Page](./public/screenshots/googleauth.png)
+
 ### Home Page
 ![Home Page](./public/screenshots/home.png)
 
