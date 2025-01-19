@@ -2,8 +2,8 @@
 
 An Instagram clone built with **React**, **Firebase**, **Zustand**, and **Cloudinary**.
 
-## Live Demo
-[Check out the live app here!](https://insta-hub-a-instagram-clone.vercel.app)
+## Live
+[InstaHub](https://insta-hub-a-instagram-clone.vercel.app)
 
 ---
 
